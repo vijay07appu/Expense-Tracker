@@ -1,9 +1,10 @@
 package com.springBootProject.expenseTracker.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,11 +13,18 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Valid
 public class ExpenseDTO {
 
     private long id;
+    @NotNull(message="Amount is required")
+    @Positive(message="Amount should be positive")
     private double amount;
+
+    @NotBlank(message="description is required")
     private String description;
+
+    @NotBlank(message="category is required")
     private String category;
     private LocalDate date;
 }
