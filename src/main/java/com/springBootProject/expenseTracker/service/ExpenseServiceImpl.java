@@ -7,6 +7,9 @@ import com.springBootProject.expenseTracker.repository.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,15 +31,26 @@ public class ExpenseServiceImpl implements ExpenseService{
     }
 
     @Override
-    public List<ExpenseDTO> viewExpense()
-    {
+    public List<ExpenseDTO> viewExpense() throws IOException{
+        FileWriter file=new FileWriter("expense.csv");
+        PrintWriter writer=new PrintWriter(file);
+        writer.println("id,Amount,Description,Category,date");
+
         List<Expense> all=expenseRepository.findAll();
         List<ExpenseDTO> allDto=new ArrayList<>();
         for(Expense e:all)
         {
             allDto.add(ExpenseMapper.entityToDto(e));
+            writer.println(
+                    e.getId() + "," +
+                            e.getDescription() + "," +
+                            e.getAmount() + "," +
+                            e.getCategory()+"," +
+                            e.getDate()
+            );
 
         }
+        writer.close();
         return allDto;
     }
 

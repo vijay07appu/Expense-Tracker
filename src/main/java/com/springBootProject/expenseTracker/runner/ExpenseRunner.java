@@ -75,11 +75,15 @@ public class ExpenseRunner implements CommandLineRunner {
     public void viewExpense(){
 
         System.out.println("List of Expenses are ");
-        List<ExpenseDTO> expenses=expenseService.viewExpense();
-        for(ExpenseDTO e:expenses)
-        {
-            System.out.println("id= "+e.getId()+" amount= "+ e.getAmount()+" description= "+e.getDescription()+" category= "+e.getCategory()+" date= "+e.getDate());
+        try{ List<ExpenseDTO> expenses=expenseService.viewExpense();
+            for(ExpenseDTO e:expenses)
+            {
+                System.out.println("id= "+e.getId()+" amount= "+ e.getAmount()+" description= "+e.getDescription()+" category= "+e.getCategory()+" date= "+e.getDate());
+            }}
+        catch(Exception e){
+            e.printStackTrace();
         }
+
 
 
     }
